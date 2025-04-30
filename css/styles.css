@@ -1,0 +1,50 @@
+.main-title {
+  color: #105718;
+}
+
+main {
+  background-color: #001504;
+}
+
+.form-control {
+  border-right: none;
+}
+
+.form-control:focus {
+  border-color: var(--bs-border-color);
+  box-shadow: none;
+}
+
+#search-button {
+  background-color: transparent;
+  color: #4D9F4B;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, .2);
+}
+
+.card-title {
+  font-size: 1.5rem;
+}
+
+.status {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+}
+
+#circle-status {
+  font-size: 8px;
+}
+
+@media screen and (max-width: 450px) {
+  .mobile-w {
+    width: 100%;
+  }
+
+  main {
+    padding: 0 3vw;
+  }
+}
