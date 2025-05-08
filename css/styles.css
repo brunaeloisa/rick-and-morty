@@ -1,27 +1,25 @@
-.main-title {
-  color: #105718;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900');
+
+* {
+  font-family: 'Roboto', sans-serif;
 }
 
 main {
   background-color: #001504;
+  background-image: linear-gradient(to top, transparent 50%, #001504), url('../assets/images/background.jpg');
+  background-size: 100vw 131vw, 100vw;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  padding-bottom: 56vw;
 }
 
-.form-control {
-  border-right: none;
+footer {
+  background-color: #1F2821;
+  color: #848484;
 }
 
-.form-control:focus {
-  border-color: var(--bs-border-color);
-  box-shadow: none;
-}
-
-#search-button {
-  background-color: transparent;
-  color: #4D9F4B;
-}
-
-.card {
-  background-color: rgba(255, 255, 255, .2);
+.main-title {
+  color: #105718;
 }
 
 .card-title {
@@ -39,12 +37,30 @@ main {
   font-size: 8px;
 }
 
+#search-button {
+  background-color: transparent;
+  color: #4D9F4B;
+}
+
+.form-control {
+  border-right: none;
+}
+
+.form-control:focus {
+  border-color: var(--bs-border-color);
+  box-shadow: none;
+}
+
+.card {
+  background-color: #354338;
+}
+
 @media screen and (max-width: 450px) {
   .mobile-w {
     width: 100%;
   }
 
-  main {
-    padding: 0 3vw;
+  img.mobile-w {
+    height: 200px;
   }
 }

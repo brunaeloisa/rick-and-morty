@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', main);
 
 async function main() {
   loadMainContent(1);
+  renderFooterData();
 }
 
 async function loadMainContent(page) {
@@ -9,16 +10,28 @@ async function loadMainContent(page) {
   const characters = [...result.charactersList];
 
   for (const character of characters) {
-    const episodeURL = character.episode[character.episode.length -1];
+    const episodeURL = character.episode[character.episode.length - 1];
     const episodeName = await getEpisodeDataFromURL(episodeURL);
 
     character.episode = {
       url: episodeURL,
       name: episodeName
     };
-  };
+  }
 
   renderCharactersList(characters);
+}
+
+async function renderFooterData() {
+  const totalCharacters = await getTotalByFeature('character');
+  const totalLocations = await getTotalByFeature('location');
+  const totalEpisodes = await getTotalByFeature('episode');
+  const currentYear = new Date().getFullYear();
+
+  document.getElementById('total-characters').innerText = totalCharacters;
+  document.getElementById('total-locations').innerText = totalLocations;
+  document.getElementById('total-episodes').innerText = totalEpisodes;
+  document.getElementById('current-year').innerText = currentYear;
 }
 
 function renderCharactersList(characters) {
@@ -27,11 +40,12 @@ function renderCharactersList(characters) {
 
   for (const character of characters) {
     const cardHTML = `
-      <div class="card mb-3 overflow-hidden">
-        <div class="row g-0">
+      <div class="card overflow-hidden h-100">
+        <div class="row g-0 h-100">
           <div class="mobile-w col-5 col-xl-4">
-              <img src="${character.image}" class="img-fluid object-fit-cover h-100 w-100" alt="Foto do personagem ${character.name}">
+            <img src="${character.image}" class="img-fluid object-fit-cover h-100 w-100" alt="Foto do personagem ${character.name}">
           </div>
+
           <div class="mobile-w col-7 col-xl-8">
             <div class="card-body fw-bold text-white">
               <h5 class="card-title fw-bold mb-1">${character.name}</h5>
@@ -42,8 +56,8 @@ function renderCharactersList(characters) {
               </p>
 
               <p class="card-text">
-                <small class="text-white-50">Última localização conhecida</small><br>
-                <small>${character.location.name === 'unknown' ? '-' : character.location.name}</small>
+                <small class="text-white-50">Última localização conhecida: </small><br>
+                <small>${character.location.name === 'unknown' ? 'Indeterminada' : character.location.name}</small>
               </p>
 
               <p class="card-text">
