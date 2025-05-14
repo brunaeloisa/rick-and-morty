@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <header class="px-1">
+  <header class="mb-4">
     <nav class="navbar bg-white">
       <div class="container-fluid">
         <a class="navbar-brand" href="#" title="Home">
@@ -26,13 +26,13 @@
       </div>
     </nav>
     
-    <section class="container py-5">
+    <section class="container-lg py-5">
       <div class="row d-flex justify-content-center g-4">
         <div class="col-12 text-center">
-          <h1 class="display-1 fw-bolder main-title">API de Rick and Morty</h1>
+          <h1 class="display-1 fw-bolder main-title px-1">API de Rick and Morty</h1>
         </div>
 
-        <div class="col-12 col-md-10 col-xl-8">
+        <div class="col-11 col-md-10 col-xl-8">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Pesquise" aria-label="Pesquisar um personagem" aria-describedby="search-button">
             <button class="input-group-text" type="button" id="search-button">
@@ -44,7 +44,7 @@
     </section>
   </header>
 
-  <main class="container-fluid pt-md-5">
+  <main class="container-fluid pt-xl-5">
     <section class="container-md">
       <div id="characters-list" class="row g-4 py-4">
         <!-- Rendered by JS -->
@@ -58,9 +58,9 @@
     </section>
   </main>
 
-  <footer class="container-fluid py-5">
-    <section class="container text-center w-75">
-      <div class="row text-uppercase fs-5 fw-bold mb-5">
+  <footer class="container-fluid pt-5 pb-4">
+    <section class="container text-center">
+      <div class="row text-uppercase fs-5 fw-bold mb-5 w-75 m-auto">
         <div class="col-12 col-md-4">
           <p>Personagens: <span id="total-characters" class="text-light"></span></p>
         </div>
@@ -80,6 +80,15 @@
       </div>
     </section>
   </footer>
+
+  <!-- Modal -->
+  <div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div id="character-detail" class="modal-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>

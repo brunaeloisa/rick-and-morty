@@ -77,13 +77,75 @@ function renderPagination(prevPage, nextPage) {
   nav.appendChild(ul);
 }
 
+async function renderCharacterDetail(characterId) {
+  const modal = document.getElementById('character-detail');
+  modal.innerHTML = '';
+
+  const character = await getCharacterById(characterId);
+  const episodeURL = character.episode[character.episode.length - 1];
+  const episodeName = await getEpisodeDataFromURL(episodeURL);
+
+  character.episode = {
+    url: episodeURL,
+    name: episodeName
+  };
+  
+  const cardHTML = `
+    <div class="card container overflow-hidden px-0">
+      <div class="row card-body g-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-theme="dark" aria-label="Close"></button>
+
+        <div class="col-12 text-center">
+          <h5 class="card-name text-center fw-bold text-white py-2">${character.name}</h5>
+        </div>
+
+        <div class="col-12 text-center">
+          <img src="${character.image}" class="img-fluid object-fit-cover w-75 rounded-circle pt-2" alt="Foto do personagem ${character.name}">
+        </div>
+        
+        <div class="col-12">
+          <div class="fw-bold text-white py-2 px-content">
+            <p class="card-text">
+              <small class="text-green">Status: </small>
+              <span class="status">
+                <i id="circle-status" class="bi bi-circle-fill text-${mapStatus(character.status).color}"></i>
+                ${mapStatus(character.status).text}
+              </span>
+            </p>
+
+            <p class="card-text">
+              <small class="text-green">Espécie: </small><br>
+              <small>${mapSpecies(character.species)}</small>
+            </p>
+
+            <p class="card-text">
+              <small class="text-green">Última localização conhecida: </small><br>
+              <small>${character.location.name === 'unknown' ? 'Indeterminada' : character.location.name}</small>
+            </p>
+
+            <p class="card-text">
+              <small class="text-green">Visto a última vez em: </small><br>
+              <small>${character.episode.name}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const modalBody = document.createElement('div');
+  modalBody.classList.add('modal-body');
+  modalBody.innerHTML = cardHTML;
+  modal.appendChild(modalBody);
+}
+
 function renderCharactersList(characters) {
   const row = document.getElementById('characters-list');
   row.innerHTML = '';
 
   for (const character of characters) {
     const cardHTML = `
-      <div class="card overflow-hidden h-100">
+      <div class="card overflow-hidden h-100" data-bs-toggle="modal" data-bs-target="#detailModal" onclick="renderCharacterDetail(${character.id})">
         <div class="row g-0 h-100">
           <div class="mobile-w col-5 col-sm-4 col-lg-5 col-xl-4">
             <img src="${character.image}" class="img-fluid object-fit-cover h-100 w-100" alt="Foto do personagem ${character.name}">
