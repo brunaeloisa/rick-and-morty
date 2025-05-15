@@ -20,7 +20,7 @@
   <header class="mb-4">
     <nav class="navbar bg-white">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#" title="Home">
+        <a id="home-button" class="navbar-brand" href="/" title="Home">
           <img src="./assets/images/icon.svg" alt="Ícone Rick and Morty" width="40">
         </a>
       </div>
@@ -33,12 +33,12 @@
         </div>
 
         <div class="col-11 col-md-10 col-xl-8">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Pesquise" aria-label="Pesquisar um personagem" aria-describedby="search-button">
-            <button class="input-group-text" type="button" id="search-button">
+          <form id="search-form" class="input-group mb-3">
+            <input id="search-input" type="search" class="form-control" placeholder="Pesquise" aria-label="Pesquisar um personagem" aria-describedby="search-button">
+            <button class="input-group-text" type="submit" id="search-button">
               <i class="bi bi-search"></i>
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </section>
@@ -98,6 +98,7 @@
 
   <!-- My JS -->
   <script src="./js/api.js"></script>
+  <script src="./js/search.js"></script>
   <script src="./js/index.js"></script>
 </body>
 

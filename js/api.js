@@ -20,6 +20,7 @@ async function listCharactersByPage(page=1) {
     return {
       prevPage: result.data.info.prev,
       nextPage: result.data.info.next,
+      totalPages: result.data.info.pages,
       charactersList: result.data.results
     };
   } catch (error) {
@@ -42,5 +43,19 @@ async function getCharacterById(id) {
     return result.data;
   } catch (error) {
     console.log(error);
+  }
+}
+
+async function getSearchResults(query) {
+  try {
+    const result = await api.get(`/character/${query}`);
+    return {
+      prevPage: result.data.info.prev,
+      nextPage: result.data.info.next,
+      totalPages: result.data.info.pages,
+      charactersList: result.data.results
+    }
+  } catch (error) {
+    return null;
   }
 }

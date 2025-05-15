@@ -85,6 +85,14 @@ main {
   color: var(--neon-green);
 }
 
+.page-info {
+  color: #30bb45;
+  border: 2px solid currentColor;
+  background-color: transparent;
+  padding: 7px 15px;
+  font-weight: bold;
+}
+
 .btn-page {
   color: #30bb45;
   border: 2px solid currentColor;

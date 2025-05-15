@@ -1,8 +1,17 @@
 document.addEventListener('DOMContentLoaded', main);
 
 async function main() {
-  loadMainContent(1);
+  const params = new URLSearchParams(window.location.search);
+  const searchTerm = params.get('name');
+
+  if (searchTerm) {
+    loadSearchResults(`?name=${searchTerm}`);
+  } else {
+    loadMainContent(1);
+  }
+
   renderFooterData();
+  searchSetUp();
 }
 
 async function loadMainContent(page) {
@@ -20,22 +29,10 @@ async function loadMainContent(page) {
   }
 
   renderCharactersList(characters);
-  renderPagination(result.prevPage, result.nextPage);
+  renderPagination(page, result.prevPage, result.nextPage, result.totalPages);
 }
 
-async function renderFooterData() {
-  const totalCharacters = await getTotalByFeature('character');
-  const totalLocations = await getTotalByFeature('location');
-  const totalEpisodes = await getTotalByFeature('episode');
-  const currentYear = new Date().getFullYear();
-
-  document.getElementById('total-characters').innerText = totalCharacters;
-  document.getElementById('total-locations').innerText = totalLocations;
-  document.getElementById('total-episodes').innerText = totalEpisodes;
-  document.getElementById('current-year').innerText = currentYear;
-}
-
-function renderPagination(prevPage, nextPage) {
+function renderPagination(page, prevPage, nextPage, totalPages) {
   const prevPageNumber = prevPage ? prevPage.split('?page=')[1] : 0;
   const nextPageNumber = nextPage ? nextPage.split('?page=')[1] : 0;
 
@@ -54,9 +51,16 @@ function renderPagination(prevPage, nextPage) {
   buttonPrev.setAttribute('type', 'button');
   buttonPrev.classList.add('page-link', 'btn-page');
   buttonPrev.innerText = 'Anterior';
-  buttonPrev.addEventListener('click', () => loadMainContent(prevPageNumber));
+  buttonPrev.addEventListener('click', () => {
+    location.href='#characters-list';
+    loadMainContent(prevPageNumber);
+  });
 
   liPrevPage.appendChild(buttonPrev);
+
+  const liPageNumber = document.createElement('li');
+  liPageNumber.classList.add('page-item', 'page-info');
+  liPageNumber.innerText = `${page} de ${totalPages}`;
 
   const liNextPage = document.createElement('li');
   liNextPage.classList.add('page-item');
@@ -67,14 +71,30 @@ function renderPagination(prevPage, nextPage) {
   buttonNext.setAttribute('type', 'button');
   buttonNext.classList.add('page-link', 'btn-page');
   buttonNext.innerText = 'Próxima';
-  buttonNext.addEventListener('click', () => loadMainContent(nextPageNumber));
+  buttonNext.addEventListener('click', () => {
+    location.href='#characters-list';
+    loadMainContent(nextPageNumber);
+  });
 
   liNextPage.appendChild(buttonNext);
 
   ul.appendChild(liPrevPage);
+  ul.appendChild(liPageNumber);
   ul.appendChild(liNextPage);
 
   nav.appendChild(ul);
+}
+
+async function renderFooterData() {
+  const totalCharacters = await getTotalByFeature('character');
+  const totalLocations = await getTotalByFeature('location');
+  const totalEpisodes = await getTotalByFeature('episode');
+  const currentYear = new Date().getFullYear();
+
+  document.getElementById('total-characters').innerText = totalCharacters;
+  document.getElementById('total-locations').innerText = totalLocations;
+  document.getElementById('total-episodes').innerText = totalEpisodes;
+  document.getElementById('current-year').innerText = currentYear;
 }
 
 async function renderCharacterDetail(characterId) {
