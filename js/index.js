@@ -29,13 +29,16 @@ async function loadMainContent(page) {
   }
 
   renderCharactersList(characters);
-  renderPagination(page, result.prevPage, result.nextPage, result.totalPages);
+  renderMainPagination(page, result.prevPage, result.nextPage, result.totalPages);
 }
 
-function renderPagination(page, prevPage, nextPage, totalPages) {
+function renderMainPagination(currentPage, prevPage, nextPage, totalPages) {
   const prevPageNumber = prevPage ? prevPage.split('?page=')[1] : 0;
   const nextPageNumber = nextPage ? nextPage.split('?page=')[1] : 0;
+  renderPaginationBase(currentPage, prevPageNumber, nextPageNumber, totalPages, loadMainContent);
+}
 
+function renderPaginationBase(currentPage, prevPage, nextPage, totalPages, loadFunction) {
   const nav = document.getElementById('pagination');
   nav.innerHTML = '';
 
@@ -49,18 +52,20 @@ function renderPagination(page, prevPage, nextPage, totalPages) {
 
   const buttonPrev = document.createElement('button');
   buttonPrev.setAttribute('type', 'button');
-  buttonPrev.classList.add('page-link', 'btn-page');
-  buttonPrev.innerText = 'Anterior';
+  buttonPrev.classList.add('page-link', 'btn-page', 'h-100');
   buttonPrev.addEventListener('click', () => {
     location.href='#characters-list';
-    loadMainContent(prevPageNumber);
+    loadFunction(prevPage);
   });
 
+  const iconPrev = document.createElement('i');
+  iconPrev.classList.add('bi', 'bi-caret-left-fill');
+  buttonPrev.appendChild(iconPrev);
   liPrevPage.appendChild(buttonPrev);
 
   const liPageNumber = document.createElement('li');
-  liPageNumber.classList.add('page-item', 'page-info');
-  liPageNumber.innerText = `${page} de ${totalPages}`;
+  liPageNumber.classList.add('page-item', 'text-center', 'page-info');
+  liPageNumber.innerText = `${currentPage} de ${totalPages}`;
 
   const liNextPage = document.createElement('li');
   liNextPage.classList.add('page-item');
@@ -69,13 +74,15 @@ function renderPagination(page, prevPage, nextPage, totalPages) {
 
   const buttonNext = document.createElement('button');
   buttonNext.setAttribute('type', 'button');
-  buttonNext.classList.add('page-link', 'btn-page');
-  buttonNext.innerText = 'Próxima';
+  buttonNext.classList.add('page-link', 'btn-page', 'h-100');
   buttonNext.addEventListener('click', () => {
     location.href='#characters-list';
-    loadMainContent(nextPageNumber);
+    loadFunction(nextPage);
   });
 
+  const iconNext = document.createElement('i');
+  iconNext.classList.add('bi', 'bi-caret-right-fill');
+  buttonNext.appendChild(iconNext);
   liNextPage.appendChild(buttonNext);
 
   ul.appendChild(liPrevPage);

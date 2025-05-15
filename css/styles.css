@@ -85,21 +85,32 @@ main {
   color: var(--neon-green);
 }
 
+.page-item:first-child .page-link {
+  border-right: none;
+}
+
+.page-item:last-child .page-link {
+  border-left: none;
+}
+
 .page-info {
   color: #30bb45;
   border: 2px solid currentColor;
   background-color: transparent;
-  padding: 7px 15px;
+  padding: 6px 15px;
   font-weight: bold;
+  text-wrap: nowrap;
+  z-index: 10;
 }
 
 .btn-page {
   color: #30bb45;
   border: 2px solid currentColor;
   background-color: transparent;
-  padding: 7px 15px;
+  padding: 6px 12px;
   font-weight: bold;
   --bs-pagination-border-radius: 12px;
+  --bs-btn-active-color: var(--neon-green);
 }
 
 .btn-page:hover {
@@ -107,6 +118,7 @@ main {
   border: 2px solid currentColor;
   background-color: transparent;
   animation: glow .7s linear infinite alternate;
+  z-index: 11;
 }
 
 .disabled .btn-page {
@@ -220,7 +232,7 @@ footer {
   }
 
   to {
-    text-shadow: 0 0 0.125em hsla(0, 0%, 100%, 0.3), 0 0 0.45em currentColor;
+    text-shadow: 0 0 0.125em hsla(0, 0%, 100%, 0.3), 0 0 0.5em currentColor;
     box-shadow: inset 0 0 0.5em 0 currentColor, 0 0 1.0em 0 currentColor;
   }
 }
